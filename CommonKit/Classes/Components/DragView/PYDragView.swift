@@ -66,7 +66,7 @@ public class PYDragView: UIView, UIGestureRecognizerDelegate {
     }()
     
     public override init(frame: CGRect) {
-        super.init()
+        super.init(frame: frame)
         self.addSubview(self.contentView)
         self.setup()
     }
