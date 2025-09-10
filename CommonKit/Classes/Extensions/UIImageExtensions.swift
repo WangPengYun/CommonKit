@@ -39,9 +39,9 @@ public extension UIImage {
         return newImage
     }
     
-    static func fixOrientation() -> UIImage? {
-        
-       return nil
-    }
+//    static func fixOrientation() -> UIImage? {
+//        
+//       return nil
+//    }
     
 }
