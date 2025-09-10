@@ -72,9 +72,7 @@ public class PYDragView: UIView, UIGestureRecognizerDelegate {
     }
     
     required public init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.addSubview(self.contentView)
-        self.setup()
+        fatalError("init(coder:) has not been implemented")
     }
     
 }
