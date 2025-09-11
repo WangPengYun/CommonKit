@@ -16,7 +16,7 @@ public enum DragDirection {
     case vertical
 }
 
-public class PYDragView: UIView, UIGestureRecognizerDelegate {
+public class PYDragView: UIView {
     
     public typealias DragBlock = ((PYDragView) -> ())
     
@@ -25,21 +25,16 @@ public class PYDragView: UIView, UIGestureRecognizerDelegate {
     var isDragingBlock: DragBlock?
     var endDragBlock: DragBlock?
     
-    
     // 是否可拖拽，默认为ture
     public var isDragEnable = true
+    // 拖拽方向
+    public var dragDirection: DragDirection = .any
     // 可活动范围，设置为CGRectZero默认为父视图范围
     public var dragRect = CGRectZero {
         didSet {
-            if dragRect != CGRectZero {
-                if let superviewBoundsSize = self.superview?.bounds.size {
-                    self.dragRect = CGRect(origin: CGPointZero, size: superviewBoundsSize)
-                }
-            }
+            self.keepCloseToBounds()
         }
     }
-    // 拖拽方向
-    public var dragDirection: DragDirection = .any
     // 是否有贴边效果，默认为false
     public var isKeepCloseToBounds = false {
         didSet {
@@ -59,49 +54,52 @@ public class PYDragView: UIView, UIGestureRecognizerDelegate {
         return imageView
     }()
     
-    private lazy var contentView: UIView = {
-        let contentView = UIView()
-        contentView.clipsToBounds = true
-        return contentView
-    }()
-    
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(self.contentView)
         self.setup()
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }
 
 extension PYDragView {
     
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        if dragRect == CGRectZero {
+            if let superviewBoundsSize = self.superview?.bounds.size {
+                self.dragRect = CGRect(origin: CGPointZero, size: superviewBoundsSize)
+            }
+        }
+    }
+    
     private func setup() {
-        
+        self.clipsToBounds = true
         self.imageView.frame = CGRect(origin: CGPointZero, size: self.bounds.size)
-        self.contentView.frame = CGRect(origin: CGPointZero, size: self.bounds.size)
+        self.addSubview(self.imageView)
         
-        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(clickDragView))
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClick))
         self.addGestureRecognizer(singleTapGesture)
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(dragAction(_:)))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleDragAction(_:)))
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 1
         self.addGestureRecognizer(panGesture)
     }
+
   
 }
 
 extension PYDragView {
     
-    @objc private func clickDragView() {
+    @objc func handleClick() {
         self.clickDragViewBlock?(self)
     }
     
-    @objc private func dragAction(_ pan: UIPanGestureRecognizer) {
+    @objc func handleDragAction(_ pan: UIPanGestureRecognizer) {
         guard self.isDragEnable else {
             return
         }
@@ -117,8 +115,8 @@ extension PYDragView {
             self.center = newPoint
             pan.setTranslation(CGPointZero, in: self)
         case .ended:
-            self.endDragBlock?(self)
             self.keepCloseToBounds()
+            self.endDragBlock?(self)
         default:
             break
         }
@@ -137,7 +135,7 @@ extension PYDragView {
             px = 0
             py = point.y - (self.startPoint?.y ?? 0)
         }
-        return CGPoint(x: px, y: py)
+        return CGPoint(x: self.center.x + px, y: self.center.y + py)
     }
     
 }
@@ -149,7 +147,7 @@ extension PYDragView {
         let centerX = self.dragRect.origin.x + (self.dragRect.size.width - self.frame.size.width) / 2
         var rect = self.frame
         if self.isKeepCloseToBounds {
-            if self.frame.origin.x < self.dragRect.origin.x {
+            if self.frame.origin.x < centerX {
                 UIView.animate(withDuration: animationDuration) {
                     rect.origin.x = self.dragRect.origin.x
                     self.frame = rect
@@ -161,7 +159,7 @@ extension PYDragView {
                 }
             }
         } else {
-            if self.frame.origin.x < centerX {
+            if self.frame.origin.x < self.dragRect.origin.x {
                 UIView.animate(withDuration: animationDuration) {
                     rect.origin.x = self.dragRect.origin.x
                     self.frame = rect
@@ -186,6 +184,5 @@ extension PYDragView {
             }
         }
     }
-    
-    
+
 }
