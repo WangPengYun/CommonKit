@@ -20,10 +20,10 @@ public class PYDragView: UIView {
     
     public typealias DragBlock = ((PYDragView) -> ())
     
-    var clickDragViewBlock: DragBlock?
-    var beginDragBlock: DragBlock?
-    var isDragingBlock: DragBlock?
-    var endDragBlock: DragBlock?
+    var clickDragViewBlock: DragBlock? = nil
+    var beginDragBlock: DragBlock? = nil
+    var isDragingBlock: DragBlock? = nil
+    var endDragBlock: DragBlock? = nil
     
     // 是否可拖拽，默认为ture
     public var isDragEnable = true
@@ -60,7 +60,8 @@ public class PYDragView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.setup()
     }
 
 }
