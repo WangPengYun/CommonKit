@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import CommonKit
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let image = UIImage.createImage(with: UIColor.blue, rect: CGRect(x: 0, y: 0, width: 100, height: 100))
+
+        let dragView = PYDragView(frame: CGRect(x: 10, y: 10, width: 100, height: 100))
+        dragView.isKeepCloseToBounds = true
+        dragView.imageView.image = image//UIImage(named: "avatar")
+        self.view.addSubview(dragView)
+        
     }
 
     override func didReceiveMemoryWarning() {

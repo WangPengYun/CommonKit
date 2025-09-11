@@ -1,36 +1,31 @@
 PODS:
   - CommonKit (0.1.0)
-  - FBSnapshotTestCase (2.1.4):
-    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
-  - FBSnapshotTestCase/Core (2.1.4)
-  - FBSnapshotTestCase/SwiftSupport (2.1.4):
-    - FBSnapshotTestCase/Core
-  - iOSSnapshotTestCase (8.0.0):
-    - iOSSnapshotTestCase/SwiftSupport (= 8.0.0)
-  - iOSSnapshotTestCase/Core (8.0.0)
-  - iOSSnapshotTestCase/SwiftSupport (8.0.0):
-    - iOSSnapshotTestCase/Core
-  - Nimble (10.0.0)
-  - Nimble-Snapshots (9.4.0):
-    - Nimble-Snapshots/Core (= 9.4.0)
-  - Nimble-Snapshots/Core (9.4.0):
-    - iOSSnapshotTestCase (~> 8.0)
-    - Nimble
-  - Quick (2.2.1)
+  - CwlCatchException (2.2.1):
+    - CwlCatchExceptionSupport (~> 2.2.1)
+  - CwlCatchExceptionSupport (2.2.1)
+  - CwlMachBadInstructionHandler (2.2.2)
+  - CwlPosixPreconditionTesting (2.2.2)
+  - CwlPreconditionTesting (2.2.2):
+    - CwlCatchException (~> 2.2.1)
+    - CwlMachBadInstructionHandler (~> 2.2.2)
+    - CwlPosixPreconditionTesting (~> 2.2.2)
+  - Nimble (13.7.1):
+    - CwlPreconditionTesting (~> 2.2.0)
+  - Quick (3.0.1)
 
 DEPENDENCIES:
   - CommonKit (from `../`)
-  - FBSnapshotTestCase (~> 2.1.4)
-  - Nimble (~> 10.0.0)
-  - Nimble-Snapshots (~> 9.4.0)
-  - Quick (~> 2.2.0)
+  - Nimble (~> 13.7.1)
+  - Quick (~> 3.0.0)
 
 SPEC REPOS:
   trunk:
-    - FBSnapshotTestCase
-    - iOSSnapshotTestCase
+    - CwlCatchException
+    - CwlCatchExceptionSupport
+    - CwlMachBadInstructionHandler
+    - CwlPosixPreconditionTesting
+    - CwlPreconditionTesting
     - Nimble
-    - Nimble-Snapshots
     - Quick
 
 EXTERNAL SOURCES:
@@ -38,13 +33,15 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CommonKit: 696cb81c8b7b4c95c5d7b523b64daa85ecb14865
-  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  iOSSnapshotTestCase: a670511f9ee3829c2b9c23e6e68f315fd7b6790f
-  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
-  Nimble-Snapshots: ef281b908c604f78c8313587e25ea92c8ab513d7
-  Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
+  CommonKit: 3bd25ccfec36fa54f1b3ea6df5a19e99b186c214
+  CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
+  CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
+  CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
+  CwlPosixPreconditionTesting: ecd095aa2129e740b44301c34571e8d85906fb88
+  CwlPreconditionTesting: 67a0047dd4de4382b93442c0e3f25207f984f35a
+  Nimble: 317d713c30c3336dd8571da1889f7ec3afc626e8
+  Quick: 947834f0d0f43fc933d0e9dd00086a76e783e4fb
 
-PODFILE CHECKSUM: 6583d9c70aae4da1361279f2771bdfae7be6dec4
+PODFILE CHECKSUM: bc439be0a0119a73937d79f12e3adf465b7247c4
 
 COCOAPODS: 1.16.2
