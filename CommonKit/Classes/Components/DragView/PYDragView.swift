@@ -18,12 +18,12 @@ public enum DragDirection {
 
 public class PYDragView: UIView, UIGestureRecognizerDelegate {
     
-    public typealias DragBlock = ((PYDragView) -> ())?
+    public typealias DragBlock = ((PYDragView) -> ())
     
-    var clickDragViewBlock: DragBlock
-    var beginDragBlock: DragBlock
-    var isDragingBlock: DragBlock
-    var endDragBlock: DragBlock
+    var clickDragViewBlock: DragBlock?
+    var beginDragBlock: DragBlock?
+    var isDragingBlock: DragBlock?
+    var endDragBlock: DragBlock?
     
     
     // 是否可拖拽，默认为ture
