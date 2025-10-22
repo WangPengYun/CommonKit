@@ -2,7 +2,7 @@
 //  PYDragView.swift
 //  CommomKit
 //
-//  Created by 王瘦子 on 2025/9/10.
+//  Created by wangpengyun on 2025/9/10.
 //
 
 import UIKit
@@ -20,15 +20,17 @@ public class PYDragView: UIView {
     
     public typealias DragBlock = ((PYDragView) -> ())
     
-    var clickDragViewBlock: DragBlock? = nil
-    var beginDragBlock: DragBlock? = nil
-    var isDragingBlock: DragBlock? = nil
-    var endDragBlock: DragBlock? = nil
+    public var clickDragViewBlock: DragBlock? = nil
+    public var beginDragBlock: DragBlock? = nil
+    public var isDragingBlock: DragBlock? = nil
+    public var endDragBlock: DragBlock? = nil
     
     // 是否可拖拽，默认为ture
     public var isDragEnable = true
     // 拖拽方向
     public var dragDirection: DragDirection = .any
+    // 拖拽动画时长
+    public var animationDuration = 0.3
     // 可活动范围，设置为CGRectZero默认为父视图范围
     public var dragRect = CGRectZero {
         didSet {
@@ -45,7 +47,6 @@ public class PYDragView: UIView {
     }
     
     private var startPoint: CGPoint?
-    private let animationDuration = 0.3
     
     public lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -89,6 +90,8 @@ extension PYDragView {
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 1
         self.addGestureRecognizer(panGesture)
+        
+        singleTapGesture.require(toFail: panGesture)
     }
 
   
